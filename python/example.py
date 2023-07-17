@@ -1,0 +1,54 @@
+# Copyright (c) 2023, Circle Technologies, LLC. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import os
+import base64
+import codecs
+# installed by `pip install pycryptodome`
+from Crypto.PublicKey import RSA
+from Crypto.Cipher import PKCS1_OAEP
+from Crypto.Hash import SHA256
+
+# paste your entity public key here
+public_key_string = 'PASTE_YOUR_PUBLIC_KEY_HERE'
+
+# store the generated Entity Secret in a secure location rather than directly embedding it within the code.
+# paste your hex encoded Entity Secret here. the length of the hex string should be 64.
+hex_encoded_entity_secret = "PASTE_YOUR_HEX_ENCODED_ENTITY_SECRET_KEY_HERE"
+
+# urandom32 creates a random entropy of 32 byte length.
+# this function generates a 32 byte random Entity Secret.
+# the generation of Entity Secret only need to be executed once unless you need to rotate Entity Secret.
+# store the generated Entity Secret in a secure location rather than directly embedding it within the code.
+def urandom32():
+    return os.urandom(32)
+
+if __name__ == '__main__':
+    entity_secret = bytes.fromhex(hex_encoded_entity_secret)
+
+    if len(entity_secret) != 32:
+        print("invalid entity secret")
+        exit(1)
+
+    public_key = RSA.importKey(public_key_string)
+
+    # encrypt data by the public key
+    cipher_rsa = PKCS1_OAEP.new(key=public_key, hashAlgo=SHA256)
+    encrypted_data = cipher_rsa.encrypt(entity_secret)
+
+    # encode to base64
+    encrypted_data_base64 = base64.b64encode(encrypted_data)
+
+    print("Hex encoded entity secret: ", codecs.encode(entity_secret, 'hex').decode())
+    print("Entity secret ciphertext: ", encrypted_data_base64.decode())
