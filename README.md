@@ -6,7 +6,7 @@ To generate an entity secret and encrypt with the entity public key, and registe
 
 1. Choose a programming language: Select the programming language you are using for your application. We provide sample code snippets for Python and Golang.
 
-2. Follow the guide to generate an entity secret and store in a secured location.
+2. Follow the sample code to generate an entity secret.
 
 3. Acquire the entity public key: Use the provided API endpoint `GET /config/entity/publicKey` to obtain the entity public key securely. This public key is required for the encryption process.
 
@@ -29,6 +29,6 @@ curl --location  --request POST 'https://api.circle.com/v1/w3s/developer/walletS
 
 **Note**: Make sure to install related libraries for encryption before using the sample code. For Python sample code please first `pip install pycryptodome`.
 
-**Note**: Store the generated entity secret in a secure location rather than directly embedding it within the code. Please store the entity secret carefully by yourself, as the entity secret is required for critical API requests and Circle does not store the information. 
+**Note**: By running the sample code you will get a hex-encoded entity secret, please store the information carefully by yourself, as it is required for critical API requests and Circle does not store the information.
 
-**Note**: To prevent replay attacks, we may block API requests appending the same entity secret ciphertext. By using the provided sample code you can generate a distinct entity secret ciphertext in each execution, please make sure to use this entity secret ciphertext as a variable in your API requests.
+**Note**: Please refrain from directly embedding the hex-encoded entity secret within the code.

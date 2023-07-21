@@ -23,17 +23,16 @@ from Crypto.Hash import SHA256
 # paste your entity public key here
 public_key_string = 'PASTE_YOUR_PUBLIC_KEY_HERE'
 
-# store the generated Entity Secret in a secure location rather than directly embedding it within the code.
-# paste your hex encoded Entity Secret here. the length of the hex string should be 64.
-hex_encoded_entity_secret = "PASTE_YOUR_HEX_ENCODED_ENTITY_SECRET_KEY_HERE"
-
 # urandom32 creates a random entropy of 32 byte length.
-# this function generates a 32 byte random Entity Secret.
-# the generation of Entity Secret only need to be executed once unless you need to rotate Entity Secret.
-# store the generated Entity Secret in a secure location rather than directly embedding it within the code.
+# This function generates a 32 byte random entity secret.
+# The generation of entity secret only need to be executed once unless you need to rotate entity secret.
 def urandom32():
     return os.urandom(32)
 
+# If you already have a hex encoded entity secret, you can paste it here. the length of the hex string should be 64.
+hex_encoded_entity_secret = "PASTE_YOUR_HEX_ENCODED_ENTITY_SECRET_KEY_HERE"
+
+# The following sample codes generate a distinct entity secret ciphertext with each execution
 if __name__ == '__main__':
     entity_secret = bytes.fromhex(hex_encoded_entity_secret)
 
