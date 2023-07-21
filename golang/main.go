@@ -31,9 +31,42 @@ import (
 // Paste your entity public key here.
 var publicKeyString = "PASTE_YOUR_PUBLIC_KEY_HERE"
 
-// Store the generated Entity Secret in a secure location rather than directly embedding it within the code.
-// Paste your hex encoded Entity Secret here. The length of the hex string should be 64.
+// GetEntropyCSPRNG creates a random entropy of 32 byte length.
+// This function generates a 32 byte random entity secret.
+// The generation of entity secret only need to be executed once unless you need to rotate entity secret.
+func GetEntropyCSPRNG() []byte {
+	mainBuff := make([]byte, 32)
+	_, err := io.ReadFull(rand.Reader, mainBuff)
+	if err != nil {
+		panic("reading from crypto/rand failed: " + err.Error())
+	}
+	return mainBuff
+}
+
+// If you already have a hex encoded entity secret, you can paste it here. the length of the hex string should be 64.
 var hexEncodedEntitySecret = "PASTE_YOUR_HEX_ENCODED_ENTITY_SECRET_KEY_HERE"
+
+// The following sample codes generate a distinct entity secret ciphertext with each execution
+func main() {
+	entitySecret, err := hex.DecodeString(hexEncodedEntitySecret)
+	if err != nil {
+		panic(err)
+	}
+	if len(entitySecret) != 32 {
+		panic("invalid entity secret")
+	}
+	pubKey, err := ParseRsaPublicKeyFromPem([]byte(publicKeyString))
+	if err != nil {
+		panic(err)
+	}
+	cipher, err := EncryptOAEP(pubKey, entitySecret)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("Hex encoded entity secret: %x\n", entitySecret)
+	fmt.Printf("Entity secret ciphertext: %s\n", base64.StdEncoding.EncodeToString(cipher))
+}
 
 // ParseRsaPublicKeyFromPem parse rsa public key from pem.
 func ParseRsaPublicKeyFromPem(pubPEM []byte) (*rsa.PublicKey, error) {
@@ -63,38 +96,4 @@ func EncryptOAEP(pubKey *rsa.PublicKey, message []byte) (ciphertext []byte, err 
 		return nil, err
 	}
 	return
-}
-
-// GetEntropyCSPRNG creates a random entropy of 32 byte length.
-// This function generates a 32 byte random Entity Secret.
-// The generation of Entity Secret only need to be executed once unless you need to rotate Entity Secret.
-// Store the generated Entity Secret in a secure location rather than directly embedding it within the code.
-func GetEntropyCSPRNG() []byte {
-	mainBuff := make([]byte, 32)
-	_, err := io.ReadFull(rand.Reader, mainBuff)
-	if err != nil {
-		panic("reading from crypto/rand failed: " + err.Error())
-	}
-	return mainBuff
-}
-
-func main() {
-	entitySecret, err := hex.DecodeString(hexEncodedEntitySecret)
-	if err != nil {
-		panic(err)
-	}
-	if len(entitySecret) != 32 {
-		panic("invalid entity secret")
-	}
-	pubKey, err := ParseRsaPublicKeyFromPem([]byte(publicKeyString))
-	if err != nil {
-		panic(err)
-	}
-	cipher, err := EncryptOAEP(pubKey, entitySecret)
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("Hex encoded entity secret: %x\n", entitySecret)
-	fmt.Printf("Entity secret ciphertext: %s\n", base64.StdEncoding.EncodeToString(cipher))
 }
