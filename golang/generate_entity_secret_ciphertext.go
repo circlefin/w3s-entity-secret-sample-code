@@ -25,23 +25,10 @@ import (
 	"encoding/pem"
 	"errors"
 	"fmt"
-	"io"
 )
 
 // Paste your entity public key here.
 var publicKeyString = "PASTE_YOUR_PUBLIC_KEY_HERE"
-
-// GetEntropyCSPRNG creates a random entropy of 32 byte length.
-// This function generates a 32 byte random entity secret.
-// The generation of entity secret only need to be executed once unless you need to rotate entity secret.
-func GetEntropyCSPRNG() []byte {
-	mainBuff := make([]byte, 32)
-	_, err := io.ReadFull(rand.Reader, mainBuff)
-	if err != nil {
-		panic("reading from crypto/rand failed: " + err.Error())
-	}
-	return mainBuff
-}
 
 // If you already have a hex encoded entity secret, you can paste it here. the length of the hex string should be 64.
 var hexEncodedEntitySecret = "PASTE_YOUR_HEX_ENCODED_ENTITY_SECRET_KEY_HERE"

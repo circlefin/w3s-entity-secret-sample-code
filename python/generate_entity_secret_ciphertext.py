@@ -12,27 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
 import base64
 import codecs
-# installed by `pip install pycryptodome`
+# Installed by `pip install pycryptodome`
 from Crypto.PublicKey import RSA
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.Hash import SHA256
 
-# paste your entity public key here
+# Paste your entity public key here.
 public_key_string = 'PASTE_YOUR_PUBLIC_KEY_HERE'
 
-# urandom32 creates a random entropy of 32 byte length.
-# This function generates a 32 byte random entity secret.
-# The generation of entity secret only need to be executed once unless you need to rotate entity secret.
-def urandom32():
-    return os.urandom(32)
-
 # If you already have a hex encoded entity secret, you can paste it here. the length of the hex string should be 64.
-hex_encoded_entity_secret = "PASTE_YOUR_HEX_ENCODED_ENTITY_SECRET_KEY_HERE"
+hex_encoded_entity_secret = 'PASTE_YOUR_HEX_ENCODED_ENTITY_SECRET_KEY_HERE'
 
-# The following sample codes generate a distinct entity secret ciphertext with each execution
+# The following sample codes generate a distinct entity secret ciphertext with each execution.
 if __name__ == '__main__':
     entity_secret = bytes.fromhex(hex_encoded_entity_secret)
 
@@ -49,5 +42,5 @@ if __name__ == '__main__':
     # encode to base64
     encrypted_data_base64 = base64.b64encode(encrypted_data)
 
-    print("Hex encoded entity secret: ", codecs.encode(entity_secret, 'hex').decode())
-    print("Entity secret ciphertext: ", encrypted_data_base64.decode())
+    print("Hex encoded entity secret:", codecs.encode(entity_secret, 'hex').decode())
+    print("Entity secret ciphertext:", encrypted_data_base64.decode())
