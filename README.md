@@ -18,6 +18,11 @@ Golang
 go run golang/generate_hex_encoded_entity_secret.go
 ```
 
+Node.js
+```bash
+node nodejs/generate_hex_encoded_entity_secret.js
+```
+
 
 3. Acquire the entity public key: Use the provided API endpoint `GET /config/entity/publicKey` to obtain the entity public key securely. This public key is required for the encryption process.
 
@@ -31,6 +36,11 @@ python python/generate_entity_secret_ciphertext.py
 Golang
 ```bash
 go run golang/generate_entity_secret_ciphertext.go
+```
+
+Node.js
+```bash
+node nodejs/generate_entity_secret_ciphertext.js
 ```
 
 5. Register the **entity secret ciphertext** in the Configurator Page in the [developer dashboard](https://console.circle.com/wallets/dev/configurator) and click Register. The entity secret ciphertext only needs to be registered once, unless you need to rotate the entity secret.
@@ -48,7 +58,7 @@ curl --location  --request POST 'https://api.circle.com/v1/w3s/developer/walletS
 }'
 ```
 
-**Note**: Make sure to install related libraries for encryption before using the sample code. For Python sample code please first `pip install pycryptodome`.
+**Note**: Make sure to install related libraries for encryption before using the sample code. For Python sample code please first `pip install pycryptodome`. For Node.js sample code please first `npm install node-forge`
 
 **Note**: Please store the hex-encoded entity secret carefully by yourself, as it is required for critical API requests and Circle does not store the information.
 
