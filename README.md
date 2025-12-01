@@ -1,6 +1,6 @@
 # Entity Secret Generation and Encryption
 
-The Entity Secret is a 32-byte private key designed to secure your developer-controlled wallets. It acts as your secret password, your personalized cryptographic stamp, known only to you.
+The Entity Secret is a base64-encoded ciphertext of the 32-byte entity secret, encrypted using RSA-OAEP with SHA-256 as the hash function and MGF1 with SHA-256 as the mask generation function.
 
 ## Getting Started
 
