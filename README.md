@@ -1,6 +1,10 @@
 # Entity Secret Generation and Encryption
 
-The Entity Secret is a base64-encoded ciphertext of the 32-byte entity secret, encrypted using RSA-OAEP with SHA-256 as the hash function and MGF1 with SHA-256 as the mask generation function.
+This repository demonstrates Entity Secret generation and encryption for Circle's W3S API.
+
+The process involves two steps:
+  1. **Generation (one-time)**: Generate a cryptographically secure 32-byte entity secret and encode it as a 64-character hex string for secure storage
+  2. **Encryption (per API request)**: Encrypt the 32-byte entity secret using RSA-OAEP (with SHA-256 for both the OAEP hash and MGF1), then base64-encode the resulting ciphertext for API requests
 
 ## Getting Started
 
