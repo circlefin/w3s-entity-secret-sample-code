@@ -6,7 +6,7 @@ The Entity Secret is a base64-encoded ciphertext of the 32-byte entity secret, e
 
 To generate an entity secret and encrypt with the entity public key, and register the entity secret ciphertext follow the steps below:
 
-1. Choose a programming language: Select the programming language you are using for your application. We provide sample code snippets for Python, Golang and Node,js. For other languages, you will have to adapt the code accordingly.
+1. Choose a programming language: Select the programming language you are using for your application. We provide sample code snippets for Python, Golang and Node.js. For other languages, you will have to adapt the code accordingly.
 
 2. Use the sample code (`generate_hex_encoded_entity_secret`) to generate a hex-encoded entity secret. You can also generate a 32 byte data and hex-encode it by yourselves.
 
