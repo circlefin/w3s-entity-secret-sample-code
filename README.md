@@ -1,6 +1,6 @@
 # Entity Secret Generation and Encryption
 
-This repository demonstrates Entity Secret generation and encryption for Circle's W3S API.
+This repository demonstrates Entity Secret generation and encryption for the Circle Wallets API.
 
 The process involves two steps:
 
